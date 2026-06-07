@@ -1,0 +1,202 @@
+# Data Model
+
+## Overview
+
+The Enterprise Document Compliance Hub utilizes a metadata-driven data model implemented on SharePoint Online to manage controlled documents, review activities, ownership information, and compliance status throughout the document lifecycle.
+
+The model was designed to support scalability, auditability, governance enforcement, and reporting requirements.
+
+---
+
+# Core Entity: Controlled Document
+
+Represents a managed document within the compliance platform.
+
+## Attributes
+
+| Field            | Type     | Description                 |
+| ---------------- | -------- | --------------------------- |
+| DocumentID       | Text     | Unique document identifier  |
+| Title            | Text     | Document title              |
+| Category         | Choice   | Business classification     |
+| Status           | Choice   | Current lifecycle status    |
+| Version          | Text     | Current version number      |
+| Owner            | Person   | Document owner              |
+| Reviewer         | Person   | Assigned reviewer           |
+| ReviewDate       | Date     | Most recent review date     |
+| NextReviewDate   | Date     | Scheduled review date       |
+| ComplianceStatus | Choice   | Compliance indicator        |
+| CreatedDate      | DateTime | Initial creation date       |
+| ModifiedDate     | DateTime | Last modification timestamp |
+
+---
+
+# Document Status Lifecycle
+
+Documents transition through the following states:
+
+```text
+Draft
+  ↓
+In Review
+  ↓
+Approved
+  ↓
+Published
+  ↓
+Archived
+```
+
+Each transition is governed by workflow validation rules.
+
+---
+
+# Review Entity
+
+Represents review activities performed against controlled documents.
+
+## Attributes
+
+| Field      | Type           | Description              |
+| ---------- | -------------- | ------------------------ |
+| ReviewID   | Text           | Unique review identifier |
+| DocumentID | Lookup         | Related document         |
+| Reviewer   | Person         | Assigned reviewer        |
+| ReviewDate | DateTime       | Review completion date   |
+| Outcome    | Choice         | Review result            |
+| Comments   | Multiple Lines | Reviewer observations    |
+| Status     | Choice         | Review status            |
+
+---
+
+# Ownership Entity
+
+Tracks document accountability.
+
+## Attributes
+
+| Field      | Type   | Description             |
+| ---------- | ------ | ----------------------- |
+| OwnerID    | Text   | Unique owner identifier |
+| UserName   | Text   | User display name       |
+| Department | Text   | Business function       |
+| Email      | Text   | Contact information     |
+| Role       | Choice | Governance role         |
+
+---
+
+# Compliance Entity
+
+Supports governance reporting and audit readiness.
+
+## Attributes
+
+| Field              | Type           | Description                  |
+| ------------------ | -------------- | ---------------------------- |
+| ComplianceID       | Text           | Compliance record identifier |
+| DocumentID         | Lookup         | Related document             |
+| ComplianceStatus   | Choice         | Current status               |
+| LastAssessmentDate | Date           | Most recent assessment       |
+| RiskLevel          | Choice         | Risk classification          |
+| Findings           | Multiple Lines | Compliance observations      |
+
+---
+
+# Relationships
+
+## Document → Review
+
+Relationship:
+
+```text
+One Document
+       │
+       ▼
+Many Reviews
+```
+
+Purpose:
+
+Track multiple review cycles throughout the document lifecycle.
+
+---
+
+## Document → Owner
+
+Relationship:
+
+```text
+One Owner
+       │
+       ▼
+Many Documents
+```
+
+Purpose:
+
+Establish accountability and governance ownership.
+
+---
+
+## Document → Compliance
+
+Relationship:
+
+```text
+One Document
+       │
+       ▼
+One Compliance Record
+```
+
+Purpose:
+
+Maintain current compliance posture.
+
+---
+
+# Metadata Governance
+
+The platform enforces standardized metadata management through:
+
+* Controlled vocabularies
+* Choice fields
+* Validation rules
+* Mandatory attributes
+* Workflow-based updates
+
+Benefits include:
+
+* Improved searchability
+* Reporting consistency
+* Governance enforcement
+* Data quality assurance
+
+---
+
+# Reporting Considerations
+
+The data model was designed to support future reporting and analytics initiatives.
+
+Example KPIs:
+
+* Documents Due for Review
+* Overdue Reviews
+* Compliance Status Distribution
+* Review Completion Rate
+* Ownership Distribution
+* Document Lifecycle Metrics
+
+---
+
+# Scalability Considerations
+
+The model supports enterprise growth through:
+
+* Metadata-driven architecture
+* Reusable entity structures
+* SharePoint indexing strategies
+* Workflow automation integration
+* Extensible compliance attributes
+
+The resulting data model provides a scalable foundation for document governance, compliance management, and enterprise reporting.
