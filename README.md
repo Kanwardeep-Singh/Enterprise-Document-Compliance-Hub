@@ -67,7 +67,23 @@ The platform follows a layered architecture:
 Users → Power Apps → Power Automate → SharePoint Online → Document Libraries
 
 Security and identity services are enforced through Microsoft Entra ID and SharePoint permission models.
-
+```text
+Users
+   │
+   ▼
+Power Apps
+   │
+   ├────────────► Power Automate
+   │                    │
+   │                    ▼
+   │            Business Workflows
+   │
+   ▼
+SharePoint Online
+   │
+   ▼
+Document Libraries
+```
 ---
 
 ## Business Benefits
@@ -78,3 +94,19 @@ Security and identity services are enforced through Microsoft Entra ID and Share
 * Standardized document governance
 * Enhanced user experience
 * Scalable enterprise architecture
+
+## Enterprise Engineering Focus
+
+While the solution is implemented using Microsoft Power Platform technologies, the repository emphasizes broader software engineering and architecture disciplines including:
+
+* Solution Architecture
+* Security Architecture
+* Governance & Compliance
+* Application Lifecycle Management (ALM)
+* Role-Based Access Control (RBAC)
+* Data Loss Prevention (DLP)
+* Process Automation
+* Enterprise UX Design
+* Documentation Standards
+
+This approach reflects how enterprise-grade Power Platform solutions are designed, governed, and maintained within large organizations.
